@@ -1,18 +1,26 @@
 <?php
 /*
- * Conexión a la base de datos CRUD.
- * En XAMPP normalmente el usuario es root y la contraseña está vacía.
- * Si tu instalación tiene otra contraseña, cámbiala aquí.
+ * Conexión del proyecto CRUD con MySQL 8.4.
+ *
+ * Apache puede ejecutarse desde XAMPP y conectarse a MySQL 8.4
+ * instalado como servicio de Windows. No es necesario iniciar
+ * MariaDB de XAMPP.
+ *
+ * IMPORTANTE:
+ * 1. Deja el host y puerto como están si MySQL usa el puerto 3306.
+ * 2. Escribe la contraseña de tu usuario MySQL en $contrasena.
+ * 3. No publiques tu contraseña en GitHub.
  */
 
-$host = 'localhost';
+$host = '127.0.0.1';
+$puerto = '3306';
 $dbname = 'CRUD';
 $usuario = 'root';
-$contrasena = '';
+$contrasena = 'ESCRIBE_AQUI_TU_CONTRASENA';
 
 try {
     $conexion = new PDO(
-        "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
+        "mysql:host=$host;port=$puerto;dbname=$dbname;charset=utf8mb4",
         $usuario,
         $contrasena
     );
@@ -21,7 +29,7 @@ try {
     $conexion->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch (PDOException $error) {
     // No mostramos credenciales ni detalles internos al visitante.
-    die('No fue posible conectar con la base de datos. Verifica XAMPP y la configuración de conexion.php.');
+    die('No fue posible conectar con MySQL 8.4. Verifica que el servicio esté iniciado, que exista la base CRUD y que las credenciales de conexion.php sean correctas.');
 }
 
 /**
