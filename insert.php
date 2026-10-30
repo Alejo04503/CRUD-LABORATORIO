@@ -54,9 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="contenedor contenedor-formulario">
         <a class="enlace-volver" href="index.php">← Volver al listado</a>
         <section class="panel formulario-panel">
-            <p class="etiqueta">Operación CREATE</p>
-            <h1>Registrar persona</h1>
-            <p class="subtitulo">Completa los datos para guardar un nuevo registro.</p>
+            <h1 class="titulo-formulario">CRUD EN PHP CON MYSQL</h1>
 
             <?php if (!empty($errores)): ?>
                 <div class="alerta alerta-error">
@@ -67,24 +65,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <form method="POST" action="insert.php" class="formulario">
-                <label>Nombre
-                    <input type="text" name="nombre" maxlength="45" value="<?= escapar($datos['nombre']) ?>" required>
+                <label><span>Nombre</span>
+                    <input type="text" name="nombre" maxlength="45" placeholder="Nombre" value="<?= escapar($datos['nombre']) ?>" required>
                 </label>
-                <label>Apellidos
-                    <input type="text" name="apellidos" maxlength="45" value="<?= escapar($datos['apellidos']) ?>" required>
+                <label><span>Apellidos</span>
+                    <input type="text" name="apellidos" maxlength="45" placeholder="Apellidos" value="<?= escapar($datos['apellidos']) ?>" required>
                 </label>
-                <label>Teléfono
-                    <input type="text" name="telefono" maxlength="45" value="<?= escapar($datos['telefono']) ?>" required>
+                <label><span>Teléfono</span>
+                    <input type="text" name="telefono" maxlength="45" placeholder="Teléfono" value="<?= escapar($datos['telefono']) ?>" required>
                 </label>
-                <label>Ciudad
-                    <input type="text" name="ciudad" maxlength="45" value="<?= escapar($datos['ciudad']) ?>" required>
+                <label><span>Ciudad</span>
+                    <input type="text" name="ciudad" maxlength="45" placeholder="Ciudad" value="<?= escapar($datos['ciudad']) ?>" required>
                 </label>
-                <label>Correo electrónico
-                    <input type="email" name="correo" maxlength="45" value="<?= escapar($datos['correo']) ?>" required>
+                <label><span>Correo electrónico</span>
+                    <input type="email" name="correo" maxlength="45" placeholder="Correo electrónico" value="<?= escapar($datos['correo']) ?>" required>
                 </label>
                 <div class="acciones-formulario">
-                    <button class="boton boton-principal" type="submit">Guardar persona</button>
-                    <a class="boton boton-claro" href="index.php">Cancelar</a>
+                    <a class="boton boton-secundario" href="index.php">Cancelar</a>
+                    <button class="boton boton-principal" type="submit">Guardar</button>
                 </div>
             </form>
         </section>
