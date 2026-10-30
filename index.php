@@ -4,13 +4,11 @@ require_once 'conexion.php';
 $buscar = trim($_GET['buscar'] ?? '');
 
 if ($buscar !== '') {
-    // El documento del laboratorio no incluye un campo documento.
-    // Por eso la búsqueda se realiza por nombre, apellidos o ciudad.
+    // La guía propone buscar por nombre o apellidos.
     $consulta = $conexion->prepare(
         'SELECT * FROM PERSONA
          WHERE nombre LIKE :buscar
             OR apellidos LIKE :buscar
-            OR ciudad LIKE :buscar
          ORDER BY id DESC'
     );
     $consulta->execute(['buscar' => "%$buscar%"]);
@@ -32,19 +30,12 @@ $estado = $_GET['estado'] ?? '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD de personas</title>
+    <title>CRUD en PHP con MySQL</title>
     <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
     <main class="contenedor">
-        <header class="encabezado">
-            <div>
-                <p class="etiqueta">Laboratorio PHP y MySQL</p>
-                <h1>Gestión de personas</h1>
-                <p class="subtitulo">Crear, consultar, actualizar y eliminar registros.</p>
-            </div>
-            <a class="boton boton-principal" href="insert.php">+ Nueva persona</a>
-        </header>
+        <h1>CRUD EN PHP CON MYSQL</h1>
 
         <?php if (isset($mensajes[$estado])): ?>
             <div class="alerta alerta-exito"><?= escapar($mensajes[$estado]) ?></div>
@@ -55,20 +46,22 @@ $estado = $_GET['estado'] ?? '';
                 <input
                     type="search"
                     name="buscar"
-                    placeholder="Buscar por nombre, apellidos o ciudad"
+                    placeholder="buscar nombre o apellidos"
                     value="<?= escapar($buscar) ?>"
+                    aria-label="Buscar nombre o apellidos"
                 >
-                <button class="boton boton-secundario" type="submit">Buscar</button>
+                <button class="boton boton-buscar" type="submit">Buscar</button>
                 <?php if ($buscar !== ''): ?>
-                    <a class="boton boton-claro" href="index.php">Limpiar</a>
+                    <a class="boton boton-secundario" href="index.php">Limpiar</a>
                 <?php endif; ?>
+                <a class="boton boton-nuevo" href="insert.php">Nuevo</a>
             </form>
 
             <div class="tabla-contenedor">
                 <table>
-                    <thead>
+                    <thead class="head">
                         <tr>
-                            <th>ID</th>
+                            <th>Id</th>
                             <th>Nombre</th>
                             <th>Apellidos</th>
                             <th>Teléfono</th>
@@ -88,10 +81,10 @@ $estado = $_GET['estado'] ?? '';
                                     <td><?= escapar($persona['ciudad']) ?></td>
                                     <td><?= escapar($persona['correo']) ?></td>
                                     <td class="acciones">
-                                        <a class="boton boton-editar" href="update.php?id=<?= urlencode($persona['id']) ?>">Editar</a>
+                                        <a class="boton-editar" href="update.php?id=<?= urlencode($persona['id']) ?>">Editar</a>
                                         <form method="POST" action="delete.php" onsubmit="return confirm('¿Seguro que deseas eliminar este registro?');">
                                             <input type="hidden" name="id" value="<?= escapar($persona['id']) ?>">
-                                            <button class="boton boton-eliminar" type="submit">Eliminar</button>
+                                            <button class="boton-eliminar" type="submit">Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>
